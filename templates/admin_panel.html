@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 50px;  
+            margin-left: 10px;
+            margin-right: 50px;          
+            padding: 20px;
+            width: max-content;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+}
+        .container_button{
+            margin-left: 10px;
+            margin-right: 50px;          
+            padding: 20px;
+            width: max-content;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            
+}
+.container_button button:hover {
+        background-color: #2980b9;
+        transform: scale(1.01);
+}
+
+        .container:hover {
+            transform: scale(1.01);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .action-form {
+            display: flex;
+            align-items: center;
+        }
+
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            background-color: #f7f7f7;
+            color: #333;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .status-accept {
+            color: #27ae60;
+        }
+
+        .status-reject {
+            color: #e74c3c;
+        }
+
+        .status-pending {
+            color: #f39c12;
+        }
+
+        .status-label {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .status-accept {
+            background-color: #27ae60;
+        }
+
+        .status-reject {
+            background-color: #e74c3c;
+        }
+
+        .status-pending {
+            background-color: #f39c12;
+        }
+        .dropdown {
+        width: 150px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        font-size: 14px;
+        color: #333;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pending Bookings</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Check-in Date</th>
+                    <th>Check-out Date</th>
+                    <th>House ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Phone Number</th>
+                    <th>Details</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in pending_bookings %}
+                <tr>
+                    <td>{{ booking['id'] }}</td>
+                    <td>{{ booking['check_in'] }}</td>
+                    <td>{{ booking['check_out'] }}</td>
+                    <td>{{ booking['House_NO'] }}</td>
+                    <td>{{ booking['name'] }}</td>
+                    <td>{{ booking['designation'] }}</td>
+                    <td>{{ booking['phone_no'] }}</td>
+                    <td>
+                    Purpose_of_visit: {{ booking['purpose_of_visit'] }}<br>
+                    Originator_name: {{ booking['originator_name'] }}<br>
+                    Department Contact Number: {{ booking['department_contact_no'] }}<br>
+                    No_of_breakfast: {{ booking['no_of_breakfast'] }}<br>
+                    No_of_lunch: {{ booking['no_of_lunch'] }}<br>
+                    No_of_dinner: {{ booking['no_of_dinner'] }}</td>
+                    <td>
+                        <form class="action-form" method="post" action="{{ url_for('admin_panel') }}">
+                            <input type="hidden" name="booking_id" value="{{ booking['id'] }}">
+                            <select class="action" name="action" onchange="showReason(this)">
+                                <option value="accept">Accept</option>
+                                <option value="reject">Reject</option>
+                            </select>
+                            
+                            <div class="reasonDiv" style="display: none;">
+                                <label for="reason">Reason for rejection:</label><br>
+                                <textarea name="reason" rows="4" cols="50"></textarea><br>
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container_button">
+        <br>
+        <button id="downloadButton" class="button" style= "margin-right: 20px;">Download Accepted Bookings</button>
+    </div>
+<script>
+function showReason(selectElement) {
+    var parentRow = selectElement.closest("tr"); // Get the parent row of the select element
+    var reasonDiv = parentRow.querySelector(".reasonDiv"); // Find the reasonDiv within the row
+    if (selectElement.value === "reject") {
+        reasonDiv.style.display = "block";
+    } else {
+        reasonDiv.style.display = "none";
+    }
+}
+
+function submitReason() {
+    var actionSelect = document.getElementById("action");
+    var reasonText = document.getElementById("reason").value;
+    if (actionSelect.value === "reject" && reasonText.trim() === "") {
+        alert("Please enter a reason for rejection.");
+    } else {
+        alert("Reason submitted: " + reasonText);
+        //can logic here, such as sending the reason to a server via AJAX
+    }
+}
+document.getElementById('downloadButton').addEventListener('click', function() {
+            // Send a GET request to the server
+            fetch('/accepted_bookings', {
+                method: 'GET',
+            })
+            .then(response => {
+                // Check if the response is successful
+                if (response.ok) {
+                    // Create a blob from the response
+                    return response.blob();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(blob => {
+                // Create a temporary link element
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'accepted_bookings.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                // Clean up the URL object
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+</script>
+
+</body>
+</html>

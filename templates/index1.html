@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Booking Form HTML Template</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+    
+    <div id="booking" class="section">
+        <div class="section-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 col-md-push-5">
+                        <div class="booking-cta">
+                            <h1 style="color: rgb(0, 0, 0);">Make your reservation</h1>
+                            <p>
+                                <ul style="color: rgb(3, 3, 3);">
+                                    <li>Virtual Tours: Provide 360-degree virtual tours of the guest house, including rooms, facilities, common areas, and outdoor spaces
+                                    <li>Customer Support: Offer live chat support or a helpline for guests to get assistance with bookings, inquiries, or any issues they encounter during their stay. VR tutorials or guides can be integrated to help navigate the platform and VR experiences effectively.</li>
+                                    </li>
+                                    <li>Spacious rooms with modern amenities</li>
+                                    <li>Beautiful garden and outdoor seating areas</li>
+                                    <li>Conference rooms for business meetings</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-pull-7">
+                        <div class="booking-form">
+                            <form action="/submit" method="POST">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check In</span>
+                                            <input class="form-control" type="date" name="check_in" id="check_in" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check out</span>
+                                            <input class="form-control" type="date" name="check_out" id="check_out" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <span class="form-label">Rooms</span>
+                                            <select class="form-control" name="rooms">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <span class="form-label">Adults</span>
+                                            <select class="form-control" name="adults">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <span class="form-label">Children</span>
+                                            <select class="form-control" name="children">
+                                                <option>0</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-btn">
+                                    <button class="submit-btn" type="submit">Check availability</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('check_in').addEventListener('change', function() {
+        const checkInDate = new Date(this.value);
+        const checkOutDate = new Date(document.getElementById('check_out').value);
+
+        if (checkInDate > checkOutDate) {
+            alert('Check-in date must be earlier than check-out date.');
+            this.value = '';
+        }
+    });
+
+    document.getElementById('check_out').addEventListener('change', function() {
+        const checkInDate = new Date(document.getElementById('check_in').value);
+        const checkOutDate = new Date(this.value);
+
+        if (checkInDate > checkOutDate) {
+            alert('Check-out date must be later than check-in date.');
+            this.value = '';
+        }
+    });
+</script>
+</html>

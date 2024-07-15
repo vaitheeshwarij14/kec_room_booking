@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #e3f2fd; 
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: none; /* Hide labels */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px); 
+            padding: 10px;
+            border: 1px solid #f0bebe;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            display: block; /* Make input elements block-level */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50; 
+            color: #fcfafa;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+
+        input[type="text"]:hover,
+        input[type="text"]:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        /* Background color for the body */
+        body {
+            background-color: #ffffff; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Guest Details Form</h2>
+        <form action="/submit_form" method="POST">
+            <!-- Hidden fields for house booking details -->
+            <input type="hidden" name="house_id" value="{{ house_id }}">
+            <input type="hidden" name="check_in" value="{{ check_in }}">
+            <input type="hidden" name="check_out" value="{{ check_out }}">
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            
+            <label for="designation">Designation:</label>
+            <input type="text" id="designation" name="designation" placeholder="Designation" required>
+            
+            <label for="phone_no">Phone Number:</label>
+            <input type="text" id="phone_no" name="phone_no" placeholder="Phone Number" required>
+            
+            <label for="purpose_of_visit">Purpose of Visit:</label>
+            <input type="text" id="purpose_of_visit" name="purpose_of_visit" placeholder="Purpose of Visit" required>
+            
+            <label for="originator_name">Originator Name:</label>
+            <input type="text" id="originator_name" name="originator_name" placeholder="Originator Name" required>
+            
+            <label for="department_contact_no">Department Contact Number:</label>
+            <input type="text" id="department_contact_no" name="department_contact_no" placeholder="Department Contact Number" required>
+            
+            <label for="no_of_breakfast">Number of Breakfast:</label>
+            <input type="text" id="no_of_breakfast" name="no_of_breakfast" placeholder="Number of Breakfast" required>
+            
+            <label for="no_of_lunch">Number of Lunch:</label>
+            <input type="text" id="no_of_lunch" name="no_of_lunch" placeholder="Number of Lunch" required>
+            
+            <label for="no_of_dinner">Number of Dinner:</label>
+            <input type="text" id="no_of_dinner" name="no_of_dinner" placeholder="Number of Dinner" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
