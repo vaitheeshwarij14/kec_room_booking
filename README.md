@@ -51,7 +51,7 @@ You can access the hosted application at [Room Booking System](https://vaitheesh
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/saliniyan/room_booking_mine.git
+    git clone https://github.com/vaitheeshwarij14/room_booking_mine.git
     ```
 
 2. **Navigate to the project directory:**
