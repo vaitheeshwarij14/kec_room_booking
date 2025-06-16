@@ -116,4 +116,4 @@ You can access the hosted application at [Room Booking System](https://vaitheesh
 
 ## Contact
 
-For any questions or feedback, please open an issue on GitHub or contact saliniyanp02@gmail.com.
+For any questions or feedback, please open an issue on GitHub or contact vaitheeshwari7777@gmail.com.
